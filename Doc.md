@@ -40,7 +40,6 @@ For SolarWinds, the attack was a reputational disaster, prompting widespread scr
 
 In this first table we can see the risk of attack for critical assets and what they might be vulnerable to. This table takes a broad overview on vulnerabilities as to create a generalised look at the security of the asset.
 
-
 ![[Pasted image 20250116173908.png]]
 
 #breif_descriptor_table2
