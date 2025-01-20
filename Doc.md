@@ -108,7 +108,7 @@ This detailed analysis provides insight into the attackers’ methodologies, off
 
 ## **Task 4: Threat modelling**
 
-![[attack tree.jpeg]]
+![[attack tree 1.jpeg]]
 
 **Root Node**
 - Objective: Compromise the SolarWinds server.
@@ -326,6 +326,111 @@ In this network diagram I have modified the existing structure to further help m
 To further improve the security I would use strict access control and logging to help detect intrusion, possibly using AI to track behavioural aspects of high level accounts and alert to unusual behaviour. 
 I would also introduce multi factor authentication for all developers and accounts with high level permissions or wide ranging access. using both physical and online access tokens.
 ## **Task 7: Security Assurance Architecture**
+1) **Access Control**
+	_"Role based access controls are implemented for access to information systems. Processes and procedures are in place to address employees who are voluntarily or involuntarily terminated. Access controls to sensitive data in our databases, systems, and environments are set on a need-to-know / least privilege necessary basis."_ & _"We require that authorized users be provisioned with unique account IDs. Our password policy covers all applicable information systems, applications, and databases. Our password best practices enforce the use of complex passwords that include both alpha and numeric characters, which are deployed to protect against unauthorized use of passwords. Passwords are individually salted and hashed."_
+	 - It is clear that these policies were ether created after or altered due to the solar winds hack 2020, it displays clear signs of a security focused approach that would have made it much harder for attackers to exploit entry into the development systems and accounts.
 
+2) Network Security
+    _"Automated tools are deployed within the network to support near-real-time analysis of events to support of detection of system-level attacks. Next generation firewalls deployed within the data centre as well as remote office sites monitor outbound communications for unusual or unauthorized activities, which may be an indicator of the presence of malware (e.g., malicious code, spyware, adware)."_
+	- This advanced internal testing of built automated tools, and further scrutinous scanning of both process activity and network activity Is more than likely a change made after 2020. due to the nature of the testing described here it would be reasonable to assume if this was in place before 2019 the attackers would have been discovered long before a production build was shipped to customers.
+
+3) Incident Management
+	_"SolarWinds has a formalized incident response plan (Incident Response Plan) and associated procedures in case of an information security incident. The Incident Response Plan defines the responsibilities of key personnel and identifies processes and procedures for notification."_
+	- I have no doubt that this policy was restructured and reviewed following the solar winds attack. while they did have a good incident response time of 48hrs to isolate, remove and patch the intrusion, It is of my opinion that incident management should also be a proactive collaboration to further prevent attack rather than just a reactive approach. Therefore a review of policies and response plan should always be reviewed after an incident.
+
+### Solar Winds Network Security Policy
+**1. Introduction**
+The purpose of this policy is to define network security practices to protect solar wind’s infrastructure, data, and network traffic from cyber threats. Informed by lessons from the SolarWinds attack, this policy emphasizes secure network structures, proactive traffic monitoring, and incident response. It applies to all employees, contractors, and third parties managing network resources.
+
+**2. Scope**
+This policy applies to all aspects of network traffic and architecture, including:
+- Logical network design and segmentation.
+- Traffic monitoring, analysis, and control tools.
+- Security protocols for internal and external network communications.
+
+**3. Objectives**
+- Protect the confidentiality, integrity, and availability of network traffic.
+- Detect and mitigate unauthorized access and anomalies in real-time.
+- Align with SANS Critical Security Controls and regulatory standards.
+
+**4. Roles and Responsibilities**
+- **IT Administrators:** Maintain network architecture and implement traffic controls.
+- **Security Team:** Monitor traffic, analyse threats, and manage incident responses.
+- **Employees:** Follow security guidelines and report anomalies.
+- **Third-Party Vendors:** Comply with organizational network security requirements.
+    
+**5. Network Security Measures**
+**5.1. Risk Assessment**
+- Conduct periodic assessments to identify vulnerabilities in network traffic and architecture.
+- Categorize risks by potential impact and likelihood.
+- Implement controls based on identified risks, such as access restrictions and enhanced monitoring.
+
+**5.2. Logical Network Segmentation**
+- Use logical zones (e.g., public, internal, restricted) to segment the network based on sensitivity.
+- Implement strict access controls between zones to limit lateral movement.
+- Regularly review and update segmentation to reflect evolving security requirements.
+
+**5.3. Network Traffic Monitoring and Analysis**
+- Deploy continuous monitoring tools, such as:
+    - Intrusion Detection and Prevention Systems (IDPS).    
+    - Flow analysers for detecting anomalies and volumetric attacks.    
+- Baseline normal traffic patterns and configure alerts for deviations.
+- Maintain logs of all network traffic for forensic analysis (minimum retention: six months).
+
+**5.4. Secure Communication Protocols**
+- Enforce encryption for sensitive traffic using protocols like TLS.
+- Block insecure protocols unless explicitly required and risk-assessed.
+- Use DNS filtering to block access to malicious or unapproved domains.
+
+**5.5. Zero Trust Network Architecture (ZTNA)**
+- Require identity verification for all devices and users accessing the network.
+- Enforce strict authentication for inter-zone communication.
+- Continuously monitor traffic within and between zones for anomalies.
+
+**5.6. Threat Detection and Response**
+- Integrate automated detection tools (e.g., SIEM) for correlating logs and identifying threats.
+- Employ machine learning for advanced threat detection, including Advanced Persistent Threats (APTs).
+- Maintain a playbook for common threats, such as Distributed Denial-of-Service (DDoS) attacks.
+
+**5.7. Metrics and Reporting**
+- Track key metrics, such as:
+    - Average response time to detected anomalies.  
+    - Number of blocked unauthorized access attempts.    
+- Generate periodic reports to review the effectiveness of security measures.
+
+**5.8. Continuous Vulnerability Scanning**
+- Use tools to identify vulnerabilities in real-time within network traffic and endpoints.
+- Apply security patches promptly and prioritize critical vulnerabilities.
+- Block traffic exploiting known vulnerabilities using dynamic access controls.
+
+**6. Training and Awareness**
+- Provide regular training on recognizing suspicious traffic for employees.
+- Train IT staff on advanced monitoring and detection tools.
+- Ensure third-party vendors understand and comply with secure network access policies.
+
+**7. Incident Response**
+- Establish an incident response plan focused on traffic-based threats.
+- Use network traffic logs to investigate incidents and implement containment measures.
+- Conduct post-incident reviews to improve traffic monitoring and threat detection processes.
+
+**8. Compliance and Audit**
+- Align with SANS Critical Security Controls, NIST CSF, and ISO/IEC 27001 standards.
+- Regularly audit traffic monitoring systems and security configurations.
+- Document and address audit findings promptly.
+
+**9. Exceptions**
+Exceptions to this policy require approval from the Security Team and must include documented risk mitigation measures.
+
+**10. Enforcement**
+Violations of this policy may result in disciplinary actions, including revocation of access privileges or termination of employment. Third-party non-compliance may lead to contract termination.
+
+**11. Review and Revision**
+This policy will be reviewed semi-annually or when significant technological or threat landscape changes occur.
+
+**12. Document Control**
+- **Version:** 1.1
+- **Effective Date:** 20/01/25
+- **Next Review Date:** 20/01/26
+- **Owner:** SolarWinds Operational Security & Compliance
 
 ## **Task 8: Stix SDO model**
