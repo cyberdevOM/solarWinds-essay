@@ -39,16 +39,13 @@ For SolarWinds, the attack was a reputational disaster, prompting widespread scr
 ![[Pasted image 20250116173941.png]]
 
 In this first table we can see the risk of attack for critical assets and what they might be vulnerable to. This table takes a broad overview on vulnerabilities as to create a generalised look at the security of the asset.
+Severity and likely hood are measured on  a 1-5 scale from 1 being unlikely and not a threat, and 5 being mission critical threat and certain. We then measure risk based on severity x likelihood. 25 being the maximum and being a critical vulnerability that if leveraged would pose a critical threat to the company. and 0 being the opposite of that.
 
 ![[Pasted image 20250116173908.png]]
-
-#breif_descriptor_table2
+This table uses the same risk assessment scale as table 1. This post assessment table shows us the controls implemented to address security risks and lower likelihood of critical events occurring. 
 
 
 ## **Task 3: Cyber kill chain analysis**
-
-#update_with_relivent_information
-
 The SolarWinds attack can be mapped using the Lockheed martin Cyber Kill chain framework, which outlines the phases of a cyber attack. Below is the detailed mapping of the attack:
 
 1. **Reconnaissance**
@@ -106,8 +103,6 @@ This detailed analysis provides insight into the attackers’ methodologies, off
 
 
 ## **Task 4: Threat modelling**
-
-![[attack tree 1.jpeg]]
 
 **Root Node**
 - Objective: Compromise the SolarWinds server.
@@ -202,8 +197,7 @@ The attack tree shows the 4 possible attack vectors, and their tree nodes, notin
 
 I was unable to use the proper attack tree notation due to the limitations of the program I use however I still believe that it provides a valuable visual representation.
 ## **Task 5: Pre-breach Infrastructure diagram**
-#change_to_inc_internet #show_customer_networks
-![[Pasted image 20250118175950.png]]
+![[pre-breach-network.png]]
 **Network diagram analysis**
 - **Routing and switching**
 	- Devices: 2911 Router, 2950T-24 Switches
@@ -249,9 +243,11 @@ I was unable to use the proper attack tree notation due to the limitations of th
 This Network Diagram has been stripped back to a simplistic interpretation of how a full network would look for SolarWinds. The development server and Distribution server would likely be hosted on prem due to the little overhead Distributing software would be, and Development server would likely contain sensitive pre-release builds of software that if released into public domain would pose a security incident for SolarWinds. Because of this Hosting on prem would allow them to maintain control over the hardware and software while managing the security of its data.
 
 Key attack vectors for the SolarWinds hack 2020 would be the development server and the distribution server, these are both included in the network model. The development server would have access to privileged development builds of the Orion software and its development environment, attackers that gain access to this would be able to manipulate the Orion software development builds in any way they see fit. This was the approach taken in the 2020 hack of SolarWinds That allowed the attackers to implement the SUNBURST malware. From here software builds are likely tested very little and then pushed to its production version of the Orion application.
+
+includes customer and attacker networks.
 ## **Task 6: Post-breach infrastructure diagram**
 
-![[Pasted image 20250118172744.png]]
+![[post-breach-network.png]]
 **Network Diagram Analysis**
 - **Routing and switching**
 	- Devices: 2911 Router, 2950T-24 Switches
@@ -337,6 +333,7 @@ I would also introduce multi factor authentication for all developers and accoun
 	_"SolarWinds has a formalized incident response plan (Incident Response Plan) and associated procedures in case of an information security incident. The Incident Response Plan defines the responsibilities of key personnel and identifies processes and procedures for notification."_
 	- I have no doubt that this policy was restructured and reviewed following the solar winds attack. while they did have a good incident response time of 48hrs to isolate, remove and patch the intrusion, It is of my opinion that incident management should also be a proactive collaboration to further prevent attack rather than just a reactive approach. Therefore a review of policies and response plan should always be reviewed after an incident.
 
+#add-more-policies-fluff
 ### Solar Winds Network Security Policy
 **1. Introduction**
 The purpose of this policy is to define network security practices to protect solar wind’s infrastructure, data, and network traffic from cyber threats. Informed by lessons from the SolarWinds attack, this policy emphasizes secure network structures, proactive traffic monitoring, and incident response. It applies to all employees, contractors, and third parties managing network resources.
@@ -433,7 +430,28 @@ This policy will be reviewed semi-annually or when significant technological or 
 - **Owner:** SolarWinds Operational Security & Compliance
 
 ## **Task 8: Stix SDO model**
+![[Screenshot stix01.png]]
+#### [Json Code On Github]()
+#### **STIX Writeup**
+**APT 29**
+- Threat actor apt29 (cozy bear)
+- goals: Cyber espionage, credential theft, data theft.
+- motivation: Strategic and geopolitical advantage, Exfiltration of sensitive data
 
+**Sunburst**
+- Malware, Trojan
+- Backdoor, External access
+- Description: Sunburst is a malware created to infect SolarWinds Orion build servers, and plant a backdoor in the form of a legitimate dll, communicating with a C2 server.
+- cve-2020-10148
+
+**Teardrop**
+- malware, Loader
+- Loader, persistence
+- Description: Teardrop is a malware loader designed to deliver a cobalt-strike payload into memory, this would allow the attackers a form of persistence into the system.
+
+APT 29 used a vulnerability in third party software to gain initial access into SolarWinds, While there is no official documentation stating how this occurred it has been noted that there was a possibility of password spray attacks and brute force, as well as auth token bypass and cookie theft and replication. Once APT29 gained access to SolarWinds systems they leveraged a vulnerability in the Orion build server to inject the SUNBURST and Teardrop malware into the development builds of Orion software. These development builds were distributed to major corporations that would need advanced access to these builds, this included Government organisations and other security research and development companies.
+
+SUNBURST was designed to infect spread and communicate with a C2 server scraping sensitive data and allowing attackers to gain access to accounts remotely. Where as Teardrop was designed to create a persistent foothold into infected devices through cobalt-strike c2 beacons.
 
 ### **References**
 
