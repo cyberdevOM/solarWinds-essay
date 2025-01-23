@@ -1,0 +1,297 @@
+{
+    "type": "bundle",
+    "id": "bundle--solarwinds-attack-detailed",
+    "objects": [
+        {
+            "type": "threat-actor",
+            "id": "threat-actor--apt29",
+            "name": "APT29",
+            "description": "APT29 is a sophisticated threat actor that has been attributed to the Russian government. The group has been active since at least 2008 and has targeted a variety of organizations, including government agencies, think tanks, and universities.",
+            "aliases": [
+                "Cozy Bear"
+            ],
+            "goals": [
+                "Espionage"
+            ],
+            "primary_motivation": "Strategic and geopolitical advantage",
+            "secondary_motivations": [
+                "Economic espionage", 
+                "Exfiltration of sensitive data", 
+                "blackmail"
+            ],
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "reconnaissance"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "weaponization"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "delivery"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "installation"
+                }
+            ]
+        },
+        {
+            "type": "malware",
+            "id": "malware--sunburst",
+            "name": "SUNBURST",
+            "description": "SUNBURST is a backdoor that was embedded in SolarWinds Orion software updates. It communicated with command-and-control servers and allowed attackers to move laterally and exfiltrate data.",
+            "malware_types": ["backdoor"],
+            "is_family": false
+        },
+        {
+            "type": "malware",
+            "id": "malware--teardrop",
+            "name": "TEARDROP",
+            "description": "TEARDROP is a custom loader malware used to deliver the Cobalt Strike Beacon payload. It executed memory-only operations to avoid detection.",
+            "malware_types": ["loader"],
+            "is_family": false
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-scc-00",
+            "name": "Supply Chain Compromise",
+            "description": "The SolarWinds attack utilized a supply chain compromise by embedding malicious code into legitimate software updates for the Orion platform.",
+            "kill_chain_phases": [
+              {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "initial-access"
+              }
+            ]
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-scPe-00",
+            "name": "Use of Stolen Credentials",
+            "description": "APT29 leveraged stolen credentials to impersonate legitimate users and escalate privileges within compromised networks.",
+            "kill_chain_phases": [
+                {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "credential-access"
+                },
+                {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "privilege-escalation"
+                }
+            ]
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-c2-s-hts",
+            "name": "Application Layer Protocol",
+            "description": "SUNBURST malware communicated with command-and-control servers using HTTP/S to evade detection and mimic legitimate traffic.",
+            "kill_chain_phases": [
+                {
+                "kill_chain_name": "mitre-attack",
+                "phase_name": "command-and-control"
+                }
+            ]
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-pha-ia",
+            "name": "Phishing",
+            "description": "Attempted phishing attacks to gain initial access.",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "reconnaissance"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "initial-access"
+                }
+            ]
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-bfa-pam",
+            "name": "Brute Force",
+            "description": "Unsuccessful brute force attempts to penetrate authentication mechanisms.",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "credential-access"
+                }
+            ]
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--atk-c2-dex",
+            "name": "C2 data Exfiltration",
+            "description": "Techniques used to exfiltrate stolen data from the network.",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "exfiltration"
+                }
+            ]
+        },
+        {
+            "type": "identity",
+            "id": "identity--solarwinds",
+            "name": "SolarWinds",
+            "description": "SolarWinds is a U.S.-based provider of IT management software. The company was the target of a major supply chain attack in 2020.",
+            "identity_class": "organization",
+            "sectors": ["Information Technology"],
+            "contact_information": "https://www.solarwinds.com"
+        },
+        {
+            "type": "identity",
+            "id": "identity--government-agencies",
+            "name": "U.S. Government Agencies",
+            "description": "Multiple U.S. government agencies were compromised through the SolarWinds Orion platform, including DHS, DoD, and Treasury.",
+            "identity_class": "organization",
+            "sectors": ["Government"]
+        },
+        {
+            "type": "identity",
+            "id": "identity--victim1",
+            "name": "Victim Organization 1",
+            "description": "Description of Victim Organization 1.",
+            "identity_class": "organization",
+            "sectors": ["Government"]
+        },
+        {
+            "type": "identity",
+            "id": "identity--victim2",
+            "name": "Victim Organization 2",
+            "description": "Description of Victim Organization 2.",
+            "identity_class": "organization",
+            "sectors": ["Finance"]
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--intrusion-to-malware",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "malware--sunburst"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--intrusion-to-malware-2",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "malware--teardrop"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--malware-to-target",
+            "relationship_type": "targets",
+            "source_ref": "malware--sunburst",
+            "target_ref": "identity--solarwinds"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--malware-to-customers",
+            "relationship_type": "affects",
+            "source_ref": "malware--sunburst",
+            "target_ref": "identity--government-agencies"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--attack-pattern-use",
+            "relationship_type": "uses",
+            "source_ref": "malware--sunburst",
+            "target_ref": "attack-pattern--atk-scc-00"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--c2-communication",
+            "relationship_type": "uses",
+            "source_ref": "malware--sunburst",
+            "target_ref": "attack-pattern--atk-c2-s-hts"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--c2-communication-tunnel",
+            "relationship_type": "uses",
+            "source_ref": "attack-pattern--atk-c2-s-hts",
+            "target_ref": "attack-pattern--atk-c2-dex"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--c2-to-apt29",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "attack-pattern--atk-c2-dex"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--apt-phishing-attempts",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "attack-pattern--atk-pha-ia"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--brute-force-failed",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "attack-pattern--atk-bfa-pam"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--stolen-credentials",
+            "relationship_type": "uses",
+            "source_ref": "threat-actor--apt29",
+            "target_ref": "attack-pattern--atk-scPe-00"
+        },
+        {
+            "type": "relationship",
+            "id": "privilage escalation from stolen credentials",
+            "relationship_type": "uses",
+            "source_ref": "attack-pattern--atk-scPe-00",
+            "target_ref": "attack-pattern--atk-c2-dex"
+        },
+        {
+            "type":"relationship",
+            "id": "relationship--sunburst-to-victim1",
+            "relationship_type": "targets",
+            "source_ref": "malware--sunburst",
+            "target_ref": "identity--victim1"
+        },
+        {
+            "type":"relationship",
+            "id": "relationship--sun-to-victim2",
+            "relationship_type": "targets",
+            "source_ref": "malware--sunburst",
+            "target_ref": "identity--victim2"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--data-exfiltration-to-victim1",
+            "relationship_type": "steals",
+            "source_ref": "attack-pattern--atk-c2-dex",
+            "target_ref": "identity--victim1"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--data-exfiltration-to-victim2",
+            "relationship_type": "steals",
+            "source_ref": "attack-pattern--atk-c2-dex",
+            "target_ref": "identity--victim2"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--C2-to-solarwinds-data",
+            "relationship_type": "steals",
+            "source_ref": "attack-pattern--atk-c2-dex",
+            "target_ref": "identity--solarwinds"
+        },
+        {
+            "type": "relationship",
+            "id": "relationship--C2-to-government-agencies-data",
+            "relationship_type": "steals",
+            "source_ref": "attack-pattern--atk-c2-dex",
+            "target_ref": "identity--government-agencies" 
+        }
+    ]
+}

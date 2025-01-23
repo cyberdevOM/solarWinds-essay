@@ -434,3 +434,18 @@ This policy will be reviewed semi-annually or when significant technological or 
 - **Owner:** SolarWinds Operational Security & Compliance
 
 ## **Task 8: Stix SDO model**
+
+
+### **References**
+
+- **SUNBURST Malware:** www.cisa.gov. (2021). _MAR-10318845-1.v1 - SUNBURST | CISA_. [online] Available at: https://www.cisa.gov/news-events/analysis-reports/ar21-039a.
+- **TEARDROP Malware:** www.cisa.gov. (2021). _MAR-10320115-1.v1 - TEARDROP | CISA_. [online] Available at: https://www.cisa.gov/news-events/analysis-reports/ar21-039b.
+- **SUNSHUTTLE Malware:** www.cisa.gov. (2021). _MAR-10327841-1.v1 – SUNSHUTTLE | CISA_. [online] Available at: https://www.cisa.gov/news-events/analysis-reports/ar21-105a.
+- **SolarWinds Compromise technical report**: CISA (2021). _Advanced Persistent Threat Compromise of Government Agencies, Critical Infrastructure, and Private Sector Organizations | CISA_. [online] Cybersecurity and Infrastructure Security Agency CISA. Available at: https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-352a.
+- **SolarWinds Compromise press report:** www.ncsc.gov.uk. (2021). _SolarWinds_. [online] Available at: https://www.ncsc.gov.uk/collection/ncsc-annual-review-2021/the-threat/solarwinds.
+- **SolarWinds Orion CVE:** nvd.nist.gov. (2020). _NVD - CVE-2020-10148_. [online] Available at: https://nvd.nist.gov/vuln/detail/CVE-2020-10148.
+
+‌
+
+‌
+‌
