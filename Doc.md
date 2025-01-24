@@ -36,12 +36,12 @@ For SolarWinds, the attack was a reputational disaster, prompting widespread scr
 
 ## **Task 2: Threat Analysis and Risk Assessment of the** **Solar Winds Attack**
 
-![[Pasted image 20250116173941.png]]
+![[risk assess table 1.png]]
 
 In this first table we can see the risk of attack for critical assets and what they might be vulnerable to. This table takes a broad overview on vulnerabilities as to create a generalised look at the security of the asset.
 Severity and likely hood are measured on  a 1-5 scale from 1 being unlikely and not a threat, and 5 being mission critical threat and certain. We then measure risk based on severity x likelihood. 25 being the maximum and being a critical vulnerability that if leveraged would pose a critical threat to the company. and 0 being the opposite of that.
 
-![[Pasted image 20250116173908.png]]
+![[risk assess table 2.png]]
 This table uses the same risk assessment scale as table 1. This post assessment table shows us the controls implemented to address security risks and lower likelihood of critical events occurring. 
 
 
@@ -68,9 +68,11 @@ The SolarWinds attack can be mapped using the Lockheed martin Cyber Kill chain f
 		- Supply chain Exploitation: By compromising SolarWinds' build process, attackers ensured that the malware would be widely distributed to approximately 18,000 organizations worldwide.
 		- exploiting trust: The attackers relied on the inherent trust customers place in signed and verified software updates.
 
-#clarify_attks_on_SW_and_attks_on_client
-4. **Exploitation**
-	Once customers installed the compromised Orion updates, the SUNBURST malware exploited the trust relationship to execute code and establish a foothold in their systems.
+1. **Exploitation**
+	**SolarWinds**
+	 When the attackers gained access to the development server, they ran the SUNBURST malware on a stolen privileged account this allowed them to gain a persistent foothold in SolarWinds development infrastructure.
+	**customers**
+	Once customers installed the compromised Orion updates, the SUNBURST malware exploited the trust relationship to execute code and establish a foothold in their systems. 
 	- **Technical Aspects:**
 		- The malware executed under the same permissions as the Orion application, often with elevated privileges.
 		- SUNBURST exploited software trust to load its malicious DLL into memory and avoid detection by using legitimate processes.
@@ -103,97 +105,33 @@ This detailed analysis provides insight into the attackers’ methodologies, off
 
 
 ## **Task 4: Threat modelling**
-
+![[attack tree (crying).png]]
+#### Attack tree explanation
 **Root Node**
 - Objective: Compromise the SolarWinds server.
 
-**Branch 1: Exploit Software development Environment**
-1. **Gaining Unauthorized access  to developer credentials:**
-	- Phishing campaigns targeting employees.
-		- Links to: Exploit network infrastructure (if phishing gains VPN access).
-	- Credential stuffing using breached database
-		- Links to: Access source code repositories.
-	- Keylogging malware planted on developer endpoints.
-		- Links to: intercepting credentials for CI/CD pipeline
+**Branch 1: Exploit misconfigured networks**
+1) insufficient Segmentation
+	- **1a:** Exploit vulnerable systems on private network
+2) misconfigured firewalls
+	- **2a:** servers to down critical infrastructure
+3) **1a + 2a:** Exploited development systems for access
+4) escalate privileges and install sunburst malware
 
-2. **Exploit vulnerabilities in development tools:**
-	- Unpatched Jenkins or CI/CD systems.
-	    - Links to: Malicious code injection into builds.
-	- Exploiting weak source control (e.g., Git, SVN).
-	    - Links to: Access repositories for code tampering.
+**Branch 2: Exploit their party software vuln**
+1) supply chain attack
+2) non updated packages
 
-3. **Social engineering to gain physical access:**
-	- Impersonate IT staff to access development infrastructure.
-	- Plant USB malware on machines in office spaces.
-	    - Links to: Introducing backdoors or stealing credentials.
+**Branch 3: Exploit employees for credentials**
+1) phishing
+2) Credential stuffing
+3) Insecure credentials
+4) **1 + 2:** Phishing and recon to brute force creds
+5) lateral movement to development systems
+6) compromise development servers & build servers
+7) install sunburst malware for persistence.
 
-**Branch 2: Compromise Supply Chain**
-1. 1. **Inject malicious code into software updates:**
-    - Modify source code repositories.
-        - Links to: Development environment vulnerabilities.
-    - Manipulate build processes in CI/CD pipelines.
-        - Links to: Exploiting developer credentials or insider threats.
-
-2. **Introduce hardware or firmware backdoors in SolarWinds servers:**
-    - Intercept hardware during transit.
-        - Links to: Physical supply chain manipulation.
-    - Tamper with firmware updates for SolarWinds devices.
-
-3. **Hijack DNS or update servers:**
-    - Redirect customers to malicious update servers.
-    - Spoof legitimate update files with malicious ones.
-        - Links to: Network perimeter compromise.
-
-**Branch 3: Exploit Network Perimeter**
-1. **Exploit unpatched vulnerabilities:**
-    - Zero-day vulnerabilities in SolarWinds software.
-        - Links to: Both insider threats and exploitation during transit.
-    - Target unpatched VPNs or firewalls.
-        - Links to: Phishing to gain initial foothold.
-
-2. **Distributed Denial of Service (DDoS) to mask activities:**
-    - Simultaneously distract defenders.
-        - Links to: Planting backdoors during the attack.
-
-3. **Weak password policies or credential reuse:**
-    - Attack publicly exposed management systems or APIs.
-        - Links to: Insider threats if credentials are compromised.
-
-**Branch 4: Exploit Insider Threats**
-1. **Bribe or coerce employees:**
-    - Gain insider access to source code repositories or build systems.
-    - Request employees to share credentials or introduce malware.
-        - Links to: Supply chain compromises.
-
-1. **Recruit or plant malicious insiders:**
-    - Developers deliberately insert backdoors.
-    - Operations staff modify DNS or update servers.
-
-1. **Social engineering insider collusion:**
-    - Trick employees into running malware or exposing data.
-        - Links to: Development environment exploitation.
-
-**Branch 5: Exploit Misconfigurations**
-1. **Unsecured build pipelines:**
-    - Misconfigured permissions on source code repositories.
-    - Weak network segmentation between critical systems.
-
-1. **Insufficient logging or monitoring:**    
-    - Allow attackers to remain undetected for longer.
-        - Links to: Network perimeter exploitation.
-
-1. **Lack of integrity checks:**
-    - Enable unnoticed tampering with updates or builds.
-
-**Key Links Between Branches**
-- **Developer Credentials → Source Code Repositories → Malicious Code Injection:** Compromised developer credentials provide access to source code repositories, where attackers can inject malicious code.
-- **Network Perimeter Exploitation → Update Distribution Manipulation:** Vulnerabilities in exposed systems can give attackers the ability to manipulate update distribution servers.
-- **Insider Threats → Supply Chain Tampering:** Malicious insiders with build pipeline access can enable the injection of malware.
-- **Misconfigurations → Delayed Detection:** Poor logging and monitoring allow attackers to maintain persistence without triggering alerts.
-
-I have included a visual and and text based attack tree diagram to the best of my ability.
-
-The attack tree shows the 4 possible attack vectors, and their tree nodes, noting links between main branches and nodes as well as between individual nodes. this is best shown in a the visualised attack tree diagram that I have included as well as linked [here](https://github.com/cyberdevOM/uni_work_backup/blob/f9853fa9337093439bf6974d47ef433c15893390/year%202/mod%202/coursework/attack%20tree.jpeg). 
+In this explanation I have noted the steps taken through each attack tree branch, In my opinion branch 3 is the most likely attack method used by apt29. we can not be sure on the attack method used to gain initial access as there are not many publications on it however the generally understood method is phishing and password spam attacks, compromising a third party account and moving to gain more access from there.
 
 I was unable to use the proper attack tree notation due to the limitations of the program I use however I still believe that it provides a valuable visual representation.
 ## **Task 5: Pre-breach Infrastructure diagram**
@@ -333,7 +271,12 @@ I would also introduce multi factor authentication for all developers and accoun
 	_"SolarWinds has a formalized incident response plan (Incident Response Plan) and associated procedures in case of an information security incident. The Incident Response Plan defines the responsibilities of key personnel and identifies processes and procedures for notification."_
 	- I have no doubt that this policy was restructured and reviewed following the solar winds attack. while they did have a good incident response time of 48hrs to isolate, remove and patch the intrusion, It is of my opinion that incident management should also be a proactive collaboration to further prevent attack rather than just a reactive approach. Therefore a review of policies and response plan should always be reviewed after an incident.
 
-#add-more-policies-fluff
+4) Physical security
+   _"Access to areas where systems, or system components, are installed or stored are segregated from general office and public areas. The cameras and alarms for each of these areas are centrally monitored 24x7 for suspicious activity, and the facilities are routinely patrolled by security guards. Servers have redundant internal and external power supplies. Data centers have backup power supplies, and can draw power from diesel generators and backup batteries. These data centers have completed a Service Organization Controls (SOC) 2 Type II audit and are SSAE16 accredited."_
+	- Physical security policies may have also been altered after this attack, it is more likely to experience a physical security breach after a digital security breach. This could be because of a reallocation of resources to recover from infrastructure loss or financial loss. Attackers also see this time where access control mechanisms may be at their weakest due to server and infrastructure downtime.
+
+5) SolarWinds has backup standards and guidelines and associated procedures for performing backup and restoration of data in a scheduled and timely manner. Controls are established to help safeguard backed up data (onsite and off-site). We also work to ensure that customer data is securely transferred or transported to and from backup locations. Periodic tests are conducted to test whether data can be safely recovered from backup devices.
+	- It is likely that data backup guidelines were updated after the breach due to the extensive time that APT29 was in the SolarWinds system. it likely compromised many backups and possibly persisted past their last backup depending on how often they delete old backups.
 ### Solar Winds Network Security Policy
 **1. Introduction**
 The purpose of this policy is to define network security practices to protect solar wind’s infrastructure, data, and network traffic from cyber threats. Informed by lessons from the SolarWinds attack, this policy emphasizes secure network structures, proactive traffic monitoring, and incident response. It applies to all employees, contractors, and third parties managing network resources.
@@ -431,7 +374,7 @@ This policy will be reviewed semi-annually or when significant technological or 
 
 ## **Task 8: Stix SDO model**
 ![[Screenshot stix01.png]]
-#### [Json Code On Github]()
+#### [Json Code On Github](https://github.com/cyberdevOM/solarWinds-essay/blob/master/stix.json)
 #### **STIX Writeup**
 **APT 29**
 - Threat actor apt29 (cozy bear)
@@ -453,6 +396,7 @@ APT 29 used a vulnerability in third party software to gain initial access into 
 
 SUNBURST was designed to infect spread and communicate with a C2 server scraping sensitive data and allowing attackers to gain access to accounts remotely. Where as Teardrop was designed to create a persistent foothold into infected devices through cobalt-strike c2 beacons.
 
+Once SolarWinds was infected it SUNBURST was executed on the development build server of the Orion software which would later infect other machines through a supply chain attack. SolarWinds was not the primary target in this attack more a means to and end goal. This end goal while still unclear, can be assumed was espionage and data theft from government organisations and other high status companies such as Microsoft.
 ### **References**
 
 - **SUNBURST Malware:** www.cisa.gov. (2021). _MAR-10318845-1.v1 - SUNBURST | CISA_. [online] Available at: https://www.cisa.gov/news-events/analysis-reports/ar21-039a.
